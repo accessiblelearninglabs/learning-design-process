@@ -289,6 +289,17 @@
 </style>
 </head>
 <body>
+ <script>
+  function notifyHeight() {
+    const h = document.querySelector('.graphic').scrollHeight + 40;
+    window.parent.postMessage({ iframeHeight: h }, '*');
+  }
+  // fire on load and whenever a phase is clicked
+  window.addEventListener('load', notifyHeight);
+  document.querySelectorAll('.phase-node').forEach(n =>
+    n.addEventListener('click', () => setTimeout(notifyHeight, 350))
+  );
+</script>
 
 <div class="graphic">
 
