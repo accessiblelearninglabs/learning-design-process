@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Five Phases, One Movement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:    #303e44;
+    --accent: #475f6a;
+    --mid:    #7a9aa6;
+    --pale:   #e8f0f3;
+    --rule:   #d0dde1;
+    --white:  #ffffff;
+  }
+
+  html, body {
+    background: var(--white);
+    font-family: 'Asap', sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 2.5rem;
+  }
+
+  /* ── TABLE ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  /* Header row */
+  thead tr {
+    border-bottom: 2px solid var(--accent);
+  }
+
+  thead th {
+    padding: 0 1.25rem 0.9rem 0;
+    text-align: left;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    white-space: nowrap;
+  }
+
+  thead th:last-child { padding-right: 0; }
+
+  /* Body rows */
+  tbody tr {
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.15s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+
+  tbody tr:hover { background: var(--pale); }
+
+  tbody td {
+    padding: 1.4rem 1.25rem 1.4rem 0;
+    vertical-align: top;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--ink);
+    font-weight: 300;
+  }
+
+  tbody td:last-child { padding-right: 0; }
+
+  /* Column: Phase name */
+  .col-phase {
+    width: 9%;
+    white-space: nowrap;
+  }
+
+  .phase-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--accent);
+    display: block;
+    line-height: 1.2;
+  }
+
+  /* Column: Focus */
+  .col-focus {
+    width: 16%;
+  }
+
+  .focus-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    font-style: normal;
+  }
+
+  /* Column: What happens */
+  .col-what { width: 40%; }
+
+  /* Column: Evidence */
+  .col-evidence {
+    width: 35%;
+    font-size: 0.8rem;
+    color: var(--mid);
+    font-style: italic;
+    line-height: 1.65;
+  }
+
+  /* ── MOBILE: stack columns vertically ── */
+  @media (max-width: 640px) {
+    .wrap { padding: 1.75rem 1.1rem 2rem; }
+
+    thead { display: none; }
+
+    table, tbody, tr, td {
+      display: block;
+      width: 100%;
+    }
+
+    tbody tr {
+      padding: 1.25rem 0;
+    }
+
+    tbody td {
+      padding: 0 0 0.6rem 0;
+      width: 100% !important;
+    }
+
+    tbody td:last-child { padding-bottom: 0; }
+
+    .col-phase { margin-bottom: 0.1rem; }
+
+    /* Show label before each cell on mobile */
+    .col-focus::before  { content: "Focus — "; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
+    .col-what::before   { content: "What happens"; display: block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); margin-bottom: 0.3rem; }
+    .col-evidence::before { content: "Evidence"; display: block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); margin-bottom: 0.3rem; font-style: normal; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    tbody tr { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <table>
+    <thead>
+      <tr>
+        <th class="col-phase" scope="col">Phase</th>
+        <th class="col-focus" scope="col">Focus</th>
+        <th class="col-what" scope="col">What happens</th>
+        <th class="col-evidence" scope="col">Evidence base</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr>
+        <td class="col-phase">
+          <span class="phase-name">Why</span>
+        </td>
+        <td class="col-focus">
+          <span class="focus-tag">Relevance &amp; activation</span>
+        </td>
+        <td class="col-what">
+          Before new knowledge is introduced, the learner needs a reason to want it. This phase surfaces existing understanding, connects to real context, and establishes why this matters — not in the abstract, but in the learner's specific circumstances and expertise.
+        </td>
+        <td class="col-evidence">
+          Self-Determination Theory (Ryan &amp; Deci, 2000): autonomy and relevance are foundational conditions for intrinsic motivation. Prior knowledge activation research confirms that learning anchored to existing understanding is retained more reliably.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="col-phase">
+          <span class="phase-name">See</span>
+        </td>
+        <td class="col-focus">
+          <span class="focus-tag">Concept-building</span>
+        </td>
+        <td class="col-what">
+          New information is introduced through demonstrations, worked examples, models, and carefully sequenced scaffolding. This phase builds on what learners already know, moving from concrete anchors toward abstraction rather than assuming a blank slate.
+        </td>
+        <td class="col-evidence">
+          Cognitive Load Theory (Sweller, 1988) and Mayer's Multimedia Learning Principles: well-scaffolded examples reduce extraneous cognitive load and support schema formation. UDL principles (Rose &amp; Meyer, CAST) guide accessible, multi-modal delivery.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="col-phase">
+          <span class="phase-name">Try</span>
+        </td>
+        <td class="col-focus">
+          <span class="focus-tag">Active &amp; experiential</span>
+        </td>
+        <td class="col-what">
+          Learners engage directly with the material through activities, exercises, or applied problems. Productive struggle is designed in — not avoided. Mistakes here generate the feedback that accelerates understanding more effectively than passive review.
+        </td>
+        <td class="col-evidence">
+          Retrieval Practice and Desirable Difficulties (Bjork, 2011; Roediger &amp; Karpicke, 2006): effortful retrieval consolidates learning more durably than re-reading. Kolb's Experiential Learning Cycle (1984) frames direct experience as the generative engine of understanding.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="col-phase">
+          <span class="phase-name">Share</span>
+        </td>
+        <td class="col-focus">
+          <span class="focus-tag">Social learning</span>
+        </td>
+        <td class="col-what">
+          Learning consolidates in community. This phase creates structured opportunities for discussion, peer feedback, and collaborative sense-making. Social scaffolding addresses what cognitive design alone cannot: the conditions that determine whether learning takes hold across different circumstances.
+        </td>
+        <td class="col-evidence">
+          Vygotsky's Zone of Proximal Development and Wenger's Communities of Practice (1998): social interaction is constitutive of learning, not supplementary to it. Research on social determinants of health affirms that community scaffolding supports equitable outcomes.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="col-phase">
+          <span class="phase-name">Reflect</span>
+        </td>
+        <td class="col-focus">
+          <span class="focus-tag">Integration &amp; transfer</span>
+        </td>
+        <td class="col-what">
+          Structured reflection is where learners take ownership of what they have built. Metacognitive prompts convert temporary understanding into durable knowledge — and enable transfer to contexts the designer could not anticipate.
+        </td>
+        <td class="col-evidence">
+          Metacognition research (Flavell, 1979; Bransford et al., How People Learn, 2000): learners who monitor their own thinking demonstrate stronger transfer and adaptive expertise. Schön's Reflective Practitioner (1983) frames reflection as the mechanism of professional learning.
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // Broadcast height to parent iframe on load and after font render
+  function notifyHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ iframeHeight: h }, '*');
+  }
+  window.addEventListener('load', function () {
+    notifyHeight();
+    setTimeout(notifyHeight, 400);
+  });
+</script>
+
+</body>
+</html>
