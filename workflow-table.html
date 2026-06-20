@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workflow Table</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:    #303e44;
+    --accent: #475f6a;
+    --mid:    #7a9aa6;
+    --pale:   #e8f0f3;
+    --rule:   #d0dde1;
+    --white:  #ffffff;
+  }
+
+  html, body {
+    background: var(--white);
+    font-family: 'Asap', sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 2.5rem;
+  }
+
+  /* ── TABLE ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  /* Header row */
+  thead tr {
+    border-bottom: 2px solid var(--accent);
+  }
+
+  thead th {
+    padding: 0 1.25rem 0.9rem 0;
+    text-align: left;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    white-space: nowrap;
+  }
+
+  thead th:last-child { padding-right: 0; }
+
+  /* Body rows */
+  tbody tr {
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.15s;
+  }
+
+  tbody tr:last-child { border-bottom: none; }
+
+  tbody tr:hover { background: var(--pale); }
+
+  tbody td {
+    padding: 1.4rem 1.25rem 1.4rem 0;
+    vertical-align: top;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--ink);
+    font-weight: 300;
+  }
+
+  tbody td:last-child { padding-right: 0; }
+
+  /* Column: Phase */
+  .col-phase {
+    width: 9%;
+    white-space: nowrap;
+  }
+
+  .phase-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--accent);
+    display: block;
+    line-height: 1.2;
+  }
+
+  .phase-duration {
+    font-size: 0.72rem;
+    color: var(--mid);
+    font-style: italic;
+    display: block;
+    margin-top: 0.2rem;
+  }
+
+  /* Column: Focus */
+  .col-focus {
+    width: 16%;
+  }
+
+  .focus-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    font-style: normal;
+  }
+
+  /* Column: What happens */
+  .col-what { width: 40%; }
+
+  /* Column: Milestone & notes */
+  .col-milestone {
+    width: 35%;
+    font-size: 0.8rem;
+    color: var(--mid);
+    font-style: italic;
+    line-height: 1.65;
+  }
+
+  .milestone-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    padding: 0.15rem 0.5rem;
+    margin-bottom: 0.55rem;
+    font-style: normal;
+  }
+
+  /* ── MOBILE: stack columns vertically ── */
+  @media (max-width: 640px) {
+    .wrap { padding: 1.75rem 1.1rem 2rem; }
+
+    thead { display: none; }
+
+    table, tbody, tr, td {
+      display: block;
+      width: 100%;
+    }
+
+    tbody tr {
+      padding: 1.25rem 0;
+    }
+
+    tbody td {
+      padding: 0 0 0.6rem 0;
+      width: 100% !important;
+    }
+
+    tbody td:last-child { padding-bottom: 0; }
+
+    .col-phase { margin-bottom: 0.1rem; }
+
+    .col-focus::before    { content: "Focus — "; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); }
+    .col-what::before     { content: "What happens"; display: block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); margin-bottom: 0.3rem; }
+    .col-milestone::before { content: "Milestone & notes"; display: block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); margin-bottom: 0.3rem; font-style: normal; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    tbody tr { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <table>
+    <thead>
+      <tr>
+        <th class="col-phase" scope="col">Phase</th>
+        <th class="col-focus" scope="col">Focus</th>
+        <th class="col-what" scope="col">What happens</th>
+        <th class="col-milestone" scope="col">Milestone &amp; notes</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr>
+        <td class="col-phase">
+          <span class="phase-name">Phase 1</span>
+          <span class="phase-duration">~2 weeks</span>
+        </td>
+        <td class="col-focus">
+          <span class="focus-tag">Assessment, Analysis &amp; Design</span>
+        </td>
+        <td class="col-what">
+          Learning needs assessment, stakeholder interviews, research synthesis, project scoping, and storyboard development. Activities are grouped to enable reverse-engineering from the storyboard output. A decision gate at the end provides an opportunity to course-correct before investment in development.
+        </td>
+        <td class="col-milestone">
+          <span class="milestone-tag">Design milestone</span>
+          A complete blueprint before any content is built. Outputs: assessment report · research report · project plan · storyboard.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="col-phase">
+          <span class="phase-name">Phase 2</span>
+          <span class="phase-duration">~2 weeks</span>
+        </td>
+        <td class="col-focus">
+          <span class="focus-tag">Development, Testing &amp; Delivery</span>
+        </td>
+        <td class="col-what">
+          Content development, beta testing with real learners, a structured beta feedback session, quality assurance against accessibility and instructional standards, and delivery preparation. Beta feedback is design data, not a formality — it is integrated before deployment.
+        </td>
+        <td class="col-milestone">
+          <span class="milestone-tag">Delivery milestone</span>
+          Content is ready for deployment. Outputs: beta testing report · quality assurance report · delivery preparation plan.
+        </td>
+      </tr>
+
+      <tr>
+        <td class="col-phase">
+          <span class="phase-name">Phase 3</span>
+          <span class="phase-duration">~2 weeks</span>
+        </td>
+        <td class="col-focus">
+          <span class="focus-tag">Evaluation, Impact &amp; Sustainment</span>
+        </td>
+        <td class="col-what">
+          Post-delivery evaluation, learning path evaluation, impact reporting, and sustainment planning — including update triggers, maintenance cycles, and knowledge management. Evaluation is designed from the start of the project, not retrofitted at the end.
+        </td>
+        <td class="col-milestone">
+          <span class="milestone-tag">Sustainment milestone</span>
+          The program continues to work over time. Outputs: evaluation and impact report · sustainment plan.
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+<script>
+  function notifyHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ iframeHeight: h }, '*');
+  }
+  window.addEventListener('load', function () {
+    notifyHeight();
+    setTimeout(notifyHeight, 400);
+  });
+</script>
+
+</body>
+</html>
