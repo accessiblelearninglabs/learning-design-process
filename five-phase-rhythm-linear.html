@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Five-Phase Learning Rhythm — Text Version</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:    #303e44;
+    --accent: #475f6a;
+    --mid:    #7a9aa6;
+    --pale:   #e8f0f3;
+    --rule:   #d0dde1;
+    --white:  #ffffff;
+  }
+
+  html, body {
+    background: var(--white);
+    font-family: 'Asap', sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 2.5rem;
+  }
+
+  /* ── BACK LINK ── */
+  .back-link {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    margin-bottom: 2rem;
+  }
+
+  .back-link:hover { color: var(--accent); }
+
+  .back-link::before {
+    content: '← ';
+  }
+
+  /* ── PAGE LABEL ── */
+  .page-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 2rem;
+    display: block;
+  }
+
+  /* ── PHASE BLOCKS ── */
+  .phase-block {
+    padding: 2rem 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .phase-block:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  .phase-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+
+  .phase-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .phase-body {
+    font-size: 0.92rem;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.75;
+    max-width: 640px;
+    margin-bottom: 0.75rem;
+  }
+
+  .phase-evidence {
+    font-size: 0.78rem;
+    color: var(--mid);
+    font-style: italic;
+    line-height: 1.65;
+    max-width: 600px;
+  }
+
+  @media (max-width: 600px) {
+    .wrap { padding: 1.75rem 1.25rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <a class="back-link" href="https://accessiblelearninglabs.github.io/learning-design-process/five-phase-rhythm.html">
+    Interactive version
+  </a>
+
+  <main aria-label="Five-phase learning rhythm — text version">
+
+    <span class="page-label" aria-hidden="true">Text version — Five phases, one movement</span>
+
+    <section class="phase-block" aria-labelledby="phase1">
+      <div class="phase-header">
+        <h2 class="phase-name" id="phase1">Phase 1 — Why</h2>
+        <span class="phase-tag">Relevance &amp; activation</span>
+      </div>
+      <p class="phase-body">Before new knowledge is introduced, the learner needs a reason to want it. This phase surfaces existing understanding, connects to real context, and establishes why this matters — not in the abstract, but in the learner's specific circumstances and expertise.</p>
+      <p class="phase-evidence">Self-Determination Theory (Ryan &amp; Deci, 2000): autonomy and relevance are foundational conditions for intrinsic motivation. Prior knowledge activation research confirms that learning anchored to existing understanding is retained more reliably.</p>
+    </section>
+
+    <section class="phase-block" aria-labelledby="phase2">
+      <div class="phase-header">
+        <h2 class="phase-name" id="phase2">Phase 2 — See</h2>
+        <span class="phase-tag">Concept-building</span>
+      </div>
+      <p class="phase-body">New information is introduced through demonstrations, worked examples, models, and carefully sequenced visual scaffolding. This phase builds on what learners already know, moving from concrete anchors toward abstraction rather than assuming a blank slate.</p>
+      <p class="phase-evidence">Cognitive Load Theory (Sweller, 1988) and Mayer's Multimedia Learning Principles: well-scaffolded examples reduce extraneous cognitive load and support schema formation. UDL principles guide accessible, multi-modal delivery.</p>
+    </section>
+
+    <section class="phase-block" aria-labelledby="phase3">
+      <div class="phase-header">
+        <h2 class="phase-name" id="phase3">Phase 3 — Try</h2>
+        <span class="phase-tag">Active &amp; experiential</span>
+      </div>
+      <p class="phase-body">Learners engage directly with the material through activities, exercises, or applied problems. Productive struggle is designed in — not avoided. Mistakes here generate the feedback that accelerates understanding more effectively than passive review.</p>
+      <p class="phase-evidence">Retrieval Practice and Desirable Difficulties (Bjork, 2011; Roediger &amp; Karpicke, 2006): effortful retrieval consolidates learning more durably than re-reading. Kolb's Experiential Learning Cycle (1984) frames direct experience as the generative engine of understanding.</p>
+    </section>
+
+    <section class="phase-block" aria-labelledby="phase4">
+      <div class="phase-header">
+        <h2 class="phase-name" id="phase4">Phase 4 — Share</h2>
+        <span class="phase-tag">Social learning</span>
+      </div>
+      <p class="phase-body">Learning consolidates in community. This phase creates structured opportunities for discussion, peer feedback, and collaborative sense-making. Social scaffolding addresses what cognitive design alone cannot: the conditions that determine whether learning takes hold across different contexts and circumstances.</p>
+      <p class="phase-evidence">Vygotsky's Zone of Proximal Development and Wenger's Communities of Practice (1998): social interaction is constitutive of learning, not supplementary to it. Research on social determinants of health affirms that community scaffolding supports equitable outcomes.</p>
+    </section>
+
+    <section class="phase-block" aria-labelledby="phase5">
+      <div class="phase-header">
+        <h2 class="phase-name" id="phase5">Phase 5 — Reflect</h2>
+        <span class="phase-tag">Integration &amp; transfer</span>
+      </div>
+      <p class="phase-body">Structured reflection is where learners take ownership of what they have built. Metacognitive prompts convert temporary understanding into durable knowledge — and enable transfer to contexts the designer could not anticipate.</p>
+      <p class="phase-evidence">Metacognition research (Flavell, 1979; Bransford et al., How People Learn, 2000): learners who monitor their own thinking demonstrate stronger transfer and adaptive expertise. Schön's Reflective Practitioner (1983) frames reflection as the mechanism of professional learning.</p>
+    </section>
+
+  </main>
+
+</div>
+
+<script>
+  function notifyHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ iframeHeight: h }, '*');
+  }
+  window.addEventListener('load', function () {
+    notifyHeight();
+    setTimeout(notifyHeight, 400);
+  });
+</script>
+
+</body>
+</html>
