@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning Design Workflow — Text Version</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:    #303e44;
+    --accent: #475f6a;
+    --mid:    #7a9aa6;
+    --pale:   #e8f0f3;
+    --rule:   #d0dde1;
+    --white:  #ffffff;
+  }
+
+  html, body {
+    background: var(--white);
+    font-family: 'Asap', sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 2.5rem;
+  }
+
+  /* ── PAGE LABEL ── */
+  .page-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 2rem;
+    display: block;
+  }
+
+  /* ── PHASE BLOCK ── */
+  .phase-block {
+    padding: 2rem 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .phase-block:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* Phase header row */
+  .phase-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+
+  .phase-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+
+  .phase-focus {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .phase-duration {
+    font-size: 0.72rem;
+    color: var(--mid);
+    font-style: italic;
+    margin-left: auto;
+  }
+
+  /* Two-column body */
+  .phase-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .col-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  /* Activities list */
+  .activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .activity-list li {
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.65;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--pale);
+    display: flex;
+    gap: 0.65rem;
+    align-items: baseline;
+  }
+
+  .activity-list li:last-child { border-bottom: none; }
+
+  .activity-list li::before {
+    content: '—';
+    color: var(--mid);
+    flex-shrink: 0;
+    font-size: 0.8rem;
+  }
+
+  /* Milestone block */
+  .milestone-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    padding: 0.15rem 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .milestone-desc {
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+
+  .milestone-outputs {
+    font-size: 0.8rem;
+    color: var(--mid);
+    font-style: italic;
+    line-height: 1.65;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 640px) {
+    .wrap { padding: 1.75rem 1.1rem 2rem; }
+    .phase-body { grid-template-columns: 1fr; gap: 1.5rem; }
+    .phase-duration { margin-left: 0; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <span class="page-label">Text version — A structured process from first conversation to sustained use</span>
+
+  <main aria-label="Learning design workflow, three phases">
+
+    <!-- ── PHASE 1 ── -->
+    <section class="phase-block" aria-labelledby="phase1-heading">
+      <div class="phase-header">
+        <h2 class="phase-name" id="phase1-heading">Phase 1</h2>
+        <span class="phase-focus">Assessment, Analysis &amp; Design</span>
+        <span class="phase-duration">~2 weeks</span>
+      </div>
+      <div class="phase-body">
+        <div>
+          <span class="col-label">Activities</span>
+          <ul class="activity-list">
+            <li>Learning needs assessment</li>
+            <li>Stakeholder interviews</li>
+            <li>Research synthesis</li>
+            <li>Project scoping and planning</li>
+            <li>Storyboard development</li>
+            <li>Decision gate — reassess before proceeding</li>
+          </ul>
+        </div>
+        <div>
+          <span class="col-label">Milestone</span>
+          <span class="milestone-tag">Design milestone</span>
+          <p class="milestone-desc">A complete blueprint for the learning experience — before a single piece of content is built. The storyboard specifies structure, sequence, learning outcomes, assessment approach, and accessibility requirements.</p>
+          <p class="milestone-outputs">Outputs: assessment report · research report · project plan · storyboard</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PHASE 2 ── -->
+    <section class="phase-block" aria-labelledby="phase2-heading">
+      <div class="phase-header">
+        <h2 class="phase-name" id="phase2-heading">Phase 2</h2>
+        <span class="phase-focus">Development, Testing &amp; Delivery</span>
+        <span class="phase-duration">~2 weeks</span>
+      </div>
+      <div class="phase-body">
+        <div>
+          <span class="col-label">Activities</span>
+          <ul class="activity-list">
+            <li>Content development</li>
+            <li>Technical skill development and aid</li>
+            <li>Beta testing with real learners</li>
+            <li>Structured beta feedback session</li>
+            <li>Quality assurance against accessibility and instructional standards</li>
+            <li>Delivery preparation</li>
+          </ul>
+        </div>
+        <div>
+          <span class="col-label">Milestone</span>
+          <span class="milestone-tag">Delivery milestone</span>
+          <p class="milestone-desc">Content is ready for deployment. The evaluation framework is in place before learners begin. Beta feedback is integrated as design data, not as a formality.</p>
+          <p class="milestone-outputs">Outputs: beta testing report · quality assurance report · delivery preparation plan</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PHASE 3 ── -->
+    <section class="phase-block" aria-labelledby="phase3-heading">
+      <div class="phase-header">
+        <h2 class="phase-name" id="phase3-heading">Phase 3</h2>
+        <span class="phase-focus">Evaluation, Impact &amp; Sustainment</span>
+        <span class="phase-duration">~2 weeks</span>
+      </div>
+      <div class="phase-body">
+        <div>
+          <span class="col-label">Activities</span>
+          <ul class="activity-list">
+            <li>Post-delivery evaluation</li>
+            <li>Learning path evaluation</li>
+            <li>Impact reporting</li>
+            <li>Sustainment planning</li>
+            <li>Update triggers and maintenance cycles</li>
+            <li>Knowledge management</li>
+          </ul>
+        </div>
+        <div>
+          <span class="col-label">Milestone</span>
+          <span class="milestone-tag">Sustainment milestone</span>
+          <p class="milestone-desc">The program continues to work over time. Sustainment is planned from the outset — not retrofitted. Impact is measured at every level: learner reaction, knowledge acquisition, behavioural transfer, and organisational outcomes.</p>
+          <p class="milestone-outputs">Outputs: evaluation and impact report · sustainment plan</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<script>
+  function notifyHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ iframeHeight: h }, '*');
+  }
+  window.addEventListener('load', function () {
+    notifyHeight();
+    setTimeout(notifyHeight, 400);
+  });
+</script>
+
+</body>
+</html>
