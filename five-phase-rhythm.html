@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Five-Phase Learning Rhythm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:    #303e44;
+    --accent: #475f6a;
+    --mid:    #7a9aa6;
+    --pale:   #e8f0f3;
+    --white:  #ffffff;
+  }
+
+  html, body {
+    background: var(--white);
+    font-family: 'Asap', sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .graphic {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 2rem 2.5rem;
+  }
+
+  /* ── ARC SVG ── */
+  .arc-wrap {
+    width: 100%;
+    position: relative;
+    margin-bottom: 0;
+  }
+
+  .arc-wrap svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+
+  /* Phase node circles */
+  .phase-node {
+    cursor: pointer;
+  }
+
+  .phase-node circle {
+    fill: var(--white);
+    stroke: var(--accent);
+    stroke-width: 1.5;
+    transition: fill 0.25s, stroke-width 0.25s;
+  }
+
+  .phase-node.active circle,
+  .phase-node:hover circle {
+    fill: var(--accent);
+    stroke: var(--accent);
+  }
+
+  .phase-node .node-label {
+    font-family: 'Asap', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    fill: var(--ink);
+    text-anchor: middle;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: fill 0.25s;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .phase-node.active .node-label,
+  .phase-node:hover .node-label {
+    fill: var(--white);
+  }
+
+  .phase-node .node-name {
+    font-family: 'Asap', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    fill: var(--ink);
+    text-anchor: middle;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .phase-node.active .node-name {
+    fill: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ── DETAIL PANEL ── */
+  .detail {
+    padding: 2rem 0 0.5rem;
+    border-top: 1px solid var(--pale);
+    margin-top: 1rem;
+  }
+
+  .detail-inner {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: none;
+  }
+
+  .detail-inner.visible {
+    opacity: 1;
+    transform: translateY(0);
+    display: block;
+  }
+
+  .detail-tag {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  .detail-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.9rem;
+    line-height: 1.15;
+  }
+
+  .detail-body {
+    font-size: 0.92rem;
+    color: var(--ink);
+    line-height: 1.75;
+    font-weight: 300;
+    max-width: 640px;
+    margin-bottom: 0.9rem;
+  }
+
+  .detail-evidence {
+    font-size: 0.78rem;
+    color: var(--mid);
+    font-style: italic;
+    line-height: 1.65;
+    max-width: 600px;
+  }
+
+  /* ── MOBILE STACK ── */
+  .mobile-stack {
+    display: none;
+  }
+
+  .mobile-phase {
+    border-top: 1px solid var(--pale);
+    padding: 1.1rem 0;
+  }
+
+  .mobile-phase:last-child {
+    border-bottom: 1px solid var(--pale);
+  }
+
+  .mobile-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    gap: 1rem;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 0;
+  }
+
+  .mobile-trigger-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .mobile-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .mobile-phase.open .mobile-dot {
+    background: var(--accent);
+    color: var(--white);
+  }
+
+  .mobile-phase-name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .mobile-chevron {
+    font-size: 0.75rem;
+    color: var(--mid);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .mobile-phase.open .mobile-chevron {
+    transform: rotate(180deg);
+  }
+
+  .mobile-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .mobile-phase.open .mobile-content {
+    max-height: 400px;
+  }
+
+  .mobile-content-inner {
+    padding: 0.9rem 0 0.4rem 3.25rem;
+  }
+
+  .mobile-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .mobile-body {
+    font-size: 0.88rem;
+    color: var(--ink);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 0.6rem;
+  }
+
+  .mobile-evidence {
+    font-size: 0.75rem;
+    color: var(--mid);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  /* ── HINT ── */
+  .hint {
+    font-size: 0.72rem;
+    color: var(--mid);
+    letter-spacing: 0.08em;
+    text-align: center;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 600px) {
+    .arc-wrap { display: none; }
+    .detail   { display: none; }
+    .hint     { display: none; }
+    .mobile-stack { display: block; }
+    .graphic { padding: 2rem 1.25rem 2rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .detail-inner, .mobile-content, .phase-node circle, .phase-node .node-label {
+      transition: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="graphic">
+
+  <!-- DESKTOP ARC -->
+  <div class="arc-wrap" role="img" aria-label="Five-phase learning rhythm diagram: Why, See, Try, Share, Reflect">
+    <svg viewBox="0 0 800 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Wave path -->
+      <path
+        d="M 80 110 C 140 110 160 60 200 60 C 240 60 260 110 300 110 C 340 110 360 60 400 60 C 440 60 460 110 500 110 C 540 110 560 60 600 60 C 640 60 660 110 720 110"
+        fill="none"
+        stroke="#475f6a"
+        stroke-width="1"
+        stroke-dasharray="3 6"
+        opacity="0.35"
+      />
+
+      <!-- Phase 1: Why — x=80, y=110 (trough) -->
+      <g class="phase-node" data-phase="0" tabindex="0" role="button" aria-label="Why — Relevance and activation">
+        <circle cx="80" cy="110" r="28"/>
+        <text class="node-label" x="80" y="114">Why</text>
+        <text class="node-name" x="80" y="150">Relevance</text>
+      </g>
+
+      <!-- Phase 2: See — x=200, y=60 (crest) -->
+      <g class="phase-node" data-phase="1" tabindex="0" role="button" aria-label="See — Concept building">
+        <circle cx="200" cy="60" r="28"/>
+        <text class="node-label" x="200" y="64">See</text>
+        <text class="node-name" x="200" y="100">Concept</text>
+      </g>
+
+      <!-- Phase 3: Try — x=400, y=60 wait — midpoint trough at 300 -->
+      <g class="phase-node" data-phase="2" tabindex="0" role="button" aria-label="Try — Active and experiential">
+        <circle cx="330" cy="110" r="28"/>
+        <text class="node-label" x="330" y="114">Try</text>
+        <text class="node-name" x="330" y="150">Experience</text>
+      </g>
+
+      <!-- Phase 4: Share — x=500, y=110 crest at 500 -->
+      <g class="phase-node" data-phase="3" tabindex="0" role="button" aria-label="Share — Social learning">
+        <circle cx="530" cy="60" r="28"/>
+        <text class="node-label" x="530" y="64">Share</text>
+        <text class="node-name" x="530" y="100">Social</text>
+      </g>
+
+      <!-- Phase 5: Reflect — x=700, y=110 -->
+      <g class="phase-node" data-phase="4" tabindex="0" role="button" aria-label="Reflect — Integration and transfer">
+        <circle cx="700" cy="110" r="28"/>
+        <text class="node-label" x="700" y="107" style="font-size:11px">Reflect</text>
+        <text class="node-name" x="700" y="150">Transfer</text>
+      </g>
+    </svg>
+  </div>
+
+  <p class="hint">Select a phase to explore</p>
+
+  <!-- DETAIL PANEL -->
+  <div class="detail" id="detail-panel" aria-live="polite">
+    <div class="detail-inner" id="detail-0">
+      <p class="detail-tag">Relevance &amp; activation</p>
+      <h2 class="detail-title">Why</h2>
+      <p class="detail-body">Before new knowledge is introduced, the learner needs a reason to want it. This phase surfaces existing understanding, connects to real context, and establishes why this matters — not in the abstract, but in the learner's specific circumstances and expertise.</p>
+      <p class="detail-evidence">Self-Determination Theory (Ryan &amp; Deci, 2000): autonomy and relevance are foundational conditions for intrinsic motivation. Prior knowledge activation research confirms that learning anchored to existing understanding is retained more reliably.</p>
+    </div>
+    <div class="detail-inner" id="detail-1">
+      <p class="detail-tag">Concept-building</p>
+      <h2 class="detail-title">See</h2>
+      <p class="detail-body">New information is introduced through demonstrations, worked examples, models, and carefully sequenced visual scaffolding. This phase builds on what learners already know, moving from concrete anchors toward abstraction rather than assuming a blank slate.</p>
+      <p class="detail-evidence">Cognitive Load Theory (Sweller, 1988) and Mayer's Multimedia Learning Principles: well-scaffolded examples reduce extraneous cognitive load and support schema formation. UDL principles guide accessible, multi-modal delivery.</p>
+    </div>
+    <div class="detail-inner" id="detail-2">
+      <p class="detail-tag">Active &amp; experiential</p>
+      <h2 class="detail-title">Try</h2>
+      <p class="detail-body">Learners engage directly with the material through activities, exercises, or applied problems. Productive struggle is designed in — not avoided. Mistakes here generate the feedback that accelerates understanding more effectively than passive review.</p>
+      <p class="detail-evidence">Retrieval Practice and Desirable Difficulties (Bjork, 2011; Roediger &amp; Karpicke, 2006): effortful retrieval consolidates learning more durably than re-reading. Kolb's Experiential Learning Cycle (1984) frames direct experience as the generative engine of understanding.</p>
+    </div>
+    <div class="detail-inner" id="detail-3">
+      <p class="detail-tag">Social learning</p>
+      <h2 class="detail-title">Share</h2>
+      <p class="detail-body">Learning consolidates in community. This phase creates structured opportunities for discussion, peer feedback, and collaborative sense-making. Social scaffolding addresses what cognitive design alone cannot: the conditions that determine whether learning takes hold across different contexts and circumstances.</p>
+      <p class="detail-evidence">Vygotsky's Zone of Proximal Development and Wenger's Communities of Practice (1998): social interaction is constitutive of learning, not supplementary to it. Research on social determinants of health affirms that community scaffolding supports equitable outcomes.</p>
+    </div>
+    <div class="detail-inner" id="detail-4">
+      <p class="detail-tag">Integration &amp; transfer</p>
+      <h2 class="detail-title">Reflect</h2>
+      <p class="detail-body">Structured reflection is where learners take ownership of what they have built. Metacognitive prompts convert temporary understanding into durable knowledge — and enable transfer to contexts the designer could not anticipate.</p>
+      <p class="detail-evidence">Metacognition research (Flavell, 1979; Bransford et al., How People Learn, 2000): learners who monitor their own thinking demonstrate stronger transfer and adaptive expertise. Schön's Reflective Practitioner (1983) frames reflection as the mechanism of professional learning.</p>
+    </div>
+  </div>
+
+  <!-- MOBILE STACK -->
+  <div class="mobile-stack" role="list">
+
+    <div class="mobile-phase" role="listitem">
+      <button class="mobile-trigger" aria-expanded="false">
+        <div class="mobile-trigger-left">
+          <div class="mobile-dot">Why</div>
+          <span class="mobile-phase-name">Why</span>
+        </div>
+        <span class="mobile-chevron" aria-hidden="true">▼</span>
+      </button>
+      <div class="mobile-content">
+        <div class="mobile-content-inner">
+          <p class="mobile-tag">Relevance &amp; activation</p>
+          <p class="mobile-body">Before new knowledge is introduced, the learner needs a reason to want it. This phase surfaces existing understanding, connects to real context, and establishes why this matters in the learner's specific circumstances.</p>
+          <p class="mobile-evidence">Self-Determination Theory (Ryan &amp; Deci, 2000)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-phase" role="listitem">
+      <button class="mobile-trigger" aria-expanded="false">
+        <div class="mobile-trigger-left">
+          <div class="mobile-dot">See</div>
+          <span class="mobile-phase-name">See</span>
+        </div>
+        <span class="mobile-chevron" aria-hidden="true">▼</span>
+      </button>
+      <div class="mobile-content">
+        <div class="mobile-content-inner">
+          <p class="mobile-tag">Concept-building</p>
+          <p class="mobile-body">New information is introduced through demonstrations, worked examples, and visual scaffolding — building on what learners already know rather than assuming a blank slate.</p>
+          <p class="mobile-evidence">Cognitive Load Theory (Sweller, 1988); Mayer's Multimedia Learning Principles</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-phase" role="listitem">
+      <button class="mobile-trigger" aria-expanded="false">
+        <div class="mobile-trigger-left">
+          <div class="mobile-dot">Try</div>
+          <span class="mobile-phase-name">Try</span>
+        </div>
+        <span class="mobile-chevron" aria-hidden="true">▼</span>
+      </button>
+      <div class="mobile-content">
+        <div class="mobile-content-inner">
+          <p class="mobile-tag">Active &amp; experiential</p>
+          <p class="mobile-body">Learners engage directly with the material through activities and applied problems. Productive struggle is designed in — mistakes generate the feedback that accelerates understanding.</p>
+          <p class="mobile-evidence">Retrieval Practice (Bjork, 2011); Kolb's Experiential Learning Cycle (1984)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-phase" role="listitem">
+      <button class="mobile-trigger" aria-expanded="false">
+        <div class="mobile-trigger-left">
+          <div class="mobile-dot">Share</div>
+          <span class="mobile-phase-name">Share</span>
+        </div>
+        <span class="mobile-chevron" aria-hidden="true">▼</span>
+      </button>
+      <div class="mobile-content">
+        <div class="mobile-content-inner">
+          <p class="mobile-tag">Social learning</p>
+          <p class="mobile-body">Learning consolidates in community. Structured discussion, peer feedback, and collaborative sense-making address what cognitive design alone cannot: the conditions that determine whether learning takes hold.</p>
+          <p class="mobile-evidence">Vygotsky's ZPD; Wenger's Communities of Practice (1998)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mobile-phase" role="listitem">
+      <button class="mobile-trigger" aria-expanded="false">
+        <div class="mobile-trigger-left">
+          <div class="mobile-dot">Reflect</div>
+          <span class="mobile-phase-name">Reflect</span>
+        </div>
+        <span class="mobile-chevron" aria-hidden="true">▼</span>
+      </button>
+      <div class="mobile-content">
+        <div class="mobile-content-inner">
+          <p class="mobile-tag">Integration &amp; transfer</p>
+          <p class="mobile-body">Structured reflection converts temporary understanding into durable knowledge — and enables transfer to contexts the designer could not anticipate.</p>
+          <p class="mobile-evidence">Flavell (1979); Bransford et al., How People Learn (2000); Schön (1983)</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /mobile-stack -->
+
+</div><!-- /graphic -->
+
+<script>
+  // ── HEIGHT BROADCASTER ──
+  // Sends the document's true scrollHeight to the parent page so the
+  // iframe resizes exactly to fit its content — no fixed height needed.
+  function notifyHeight() {
+    const h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ iframeHeight: h }, '*');
+  }
+
+  // Fire once fonts + layout are settled, then again after 400ms
+  // to catch any async font-load that shifts the layout.
+  window.addEventListener('load', function () {
+    notifyHeight();
+    setTimeout(notifyHeight, 400);
+  });
+
+  // ── DESKTOP INTERACTION ──
+  const nodes = document.querySelectorAll('.phase-node');
+  const panels = document.querySelectorAll('.detail-inner');
+  let active = null;
+
+  function activate(idx) {
+    // Reset all
+    nodes.forEach(n => n.classList.remove('active'));
+    panels.forEach(p => {
+      p.classList.remove('visible');
+      p.style.display = 'none';
+    });
+
+    if (active === idx) {
+      // Clicking active node collapses it
+      active = null;
+      // Notify after transition completes (300ms matches CSS)
+      setTimeout(notifyHeight, 320);
+      return;
+    }
+
+    active = idx;
+    nodes[idx].classList.add('active');
+    const panel = document.getElementById('detail-' + idx);
+    panel.style.display = 'block';
+    panel.getBoundingClientRect(); // force reflow for transition
+    panel.classList.add('visible');
+
+    // Notify immediately (panel is block now) and again after transition
+    notifyHeight();
+    setTimeout(notifyHeight, 320);
+  }
+
+  nodes.forEach((node, i) => {
+    node.addEventListener('click', () => activate(i));
+    node.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(i); }
+    });
+  });
+
+  // ── MOBILE INTERACTION ──
+  const mobilePanels = document.querySelectorAll('.mobile-phase');
+
+  mobilePanels.forEach(phase => {
+    const trigger = phase.querySelector('.mobile-trigger');
+    trigger.addEventListener('click', () => {
+      const isOpen = phase.classList.contains('open');
+      // Close all
+      mobilePanels.forEach(p => {
+        p.classList.remove('open');
+        p.querySelector('.mobile-trigger').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        phase.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+      // Notify after mobile accordion transition (300ms)
+      setTimeout(notifyHeight, 320);
+    });
+  });
+</script>
+</body>
+</html>
