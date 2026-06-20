@@ -45,7 +45,7 @@
     overflow: visible;
   }
 
-  /* Phase node circles */
+  /* Phase node circles — r=42, so 84px diameter */
   .phase-node {
     cursor: pointer;
   }
@@ -63,13 +63,15 @@
     stroke: var(--accent);
   }
 
+  /* dominant-baseline: middle centres text vertically in SVG */
   .phase-node .node-label {
     font-family: 'Asap', sans-serif;
     font-size: 13px;
     font-weight: 600;
     fill: var(--ink);
     text-anchor: middle;
-    letter-spacing: 0.08em;
+    dominant-baseline: middle;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     transition: fill 0.25s;
     pointer-events: none;
@@ -79,21 +81,6 @@
   .phase-node.active .node-label,
   .phase-node:hover .node-label {
     fill: var(--white);
-  }
-
-  .phase-node .node-name {
-    font-family: 'Asap', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    fill: var(--ink);
-    text-anchor: middle;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .phase-node.active .node-name {
-    fill: var(--accent);
-    font-weight: 600;
   }
 
   /* ── DETAIL PANEL ── */
@@ -150,6 +137,17 @@
     max-width: 600px;
   }
 
+  /* ── HINT ── */
+  .hint {
+    font-size: 0.72rem;
+    color: var(--mid);
+    letter-spacing: 0.08em;
+    text-align: center;
+    margin-top: 0.75rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+
   /* ── MOBILE STACK ── */
   .mobile-stack {
     display: none;
@@ -184,15 +182,15 @@
   }
 
   .mobile-dot {
-    width: 40px;
-    height: 40px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     border: 1.5px solid var(--accent);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    font-size: 0.55rem;
+    font-size: 0.6rem;
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -233,7 +231,7 @@
   }
 
   .mobile-content-inner {
-    padding: 0.9rem 0 0.4rem 3.25rem;
+    padding: 0.9rem 0 0.4rem 4rem;
   }
 
   .mobile-tag {
@@ -260,29 +258,18 @@
     line-height: 1.6;
   }
 
-  /* ── HINT ── */
-  .hint {
-    font-size: 0.72rem;
-    color: var(--mid);
-    letter-spacing: 0.08em;
-    text-align: center;
-    margin-top: 0.5rem;
-    margin-bottom: 1.5rem;
-    text-transform: uppercase;
-  }
-
   @media (max-width: 600px) {
-    .arc-wrap { display: none; }
-    .detail   { display: none; }
-    .hint     { display: none; }
+    .arc-wrap  { display: none; }
+    .detail    { display: none; }
+    .hint      { display: none; }
     .mobile-stack { display: block; }
     .graphic { padding: 2rem 1.25rem 2rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .detail-inner, .mobile-content, .phase-node circle, .phase-node .node-label {
-      transition: none !important;
-    }
+    .detail-inner, .mobile-content,
+    .phase-node circle, .phase-node .node-label,
+    .mobile-chevron { transition: none !important; }
   }
 </style>
 </head>
@@ -291,59 +278,68 @@
 <div class="graphic">
 
   <!-- DESKTOP ARC -->
+  <!--
+    SVG viewBox: 800 wide × 220 tall
+    Five nodes at r=42 (84px diameter), evenly spaced along a gentle wave.
+    Node centres (cx, cy):
+      Why:     80,  140  (trough)
+      See:    230,   80  (crest)
+      Try:    400,  140  (trough)
+      Share:  570,   80  (crest)
+      Reflect: 720, 140  (trough)
+    Wave path passes through all five centres.
+    text y = cy (dominant-baseline:middle centres it vertically).
+  -->
   <div class="arc-wrap" role="img" aria-label="Five-phase learning rhythm diagram: Why, See, Try, Share, Reflect">
-    <svg viewBox="0 0 800 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <!-- Wave path -->
+    <svg viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+
+      <!-- Dashed wave path through all five node centres -->
       <path
-        d="M 80 110 C 140 110 160 60 200 60 C 240 60 260 110 300 110 C 340 110 360 60 400 60 C 440 60 460 110 500 110 C 540 110 560 60 600 60 C 640 60 660 110 720 110"
+        d="M 80 140 C 130 140 180 80 230 80 C 280 80 330 140 400 140 C 470 140 520 80 570 80 C 620 80 670 140 720 140"
         fill="none"
         stroke="#475f6a"
         stroke-width="1"
-        stroke-dasharray="3 6"
-        opacity="0.35"
+        stroke-dasharray="3 7"
+        opacity="0.3"
       />
 
-      <!-- Phase 1: Why — x=80, y=110 (trough) -->
-      <g class="phase-node" data-phase="0" tabindex="0" role="button" aria-label="Why — Relevance and activation">
-        <circle cx="80" cy="110" r="28"/>
-        <text class="node-label" x="80" y="114">Why</text>
-        <text class="node-name" x="80" y="150">Relevance</text>
+      <!-- Phase 1: Why — trough -->
+      <g class="phase-node" data-phase="0" tabindex="0" role="button" aria-label="Phase 1: Why — Relevance and activation. Press Enter or Space to expand.">
+        <circle cx="80" cy="140" r="42"/>
+        <text class="node-label" x="80" y="140">Why</text>
       </g>
 
-      <!-- Phase 2: See — x=200, y=60 (crest) -->
-      <g class="phase-node" data-phase="1" tabindex="0" role="button" aria-label="See — Concept building">
-        <circle cx="200" cy="60" r="28"/>
-        <text class="node-label" x="200" y="64">See</text>
-        <text class="node-name" x="200" y="100">Concept</text>
+      <!-- Phase 2: See — crest -->
+      <g class="phase-node" data-phase="1" tabindex="0" role="button" aria-label="Phase 2: See — Concept building. Press Enter or Space to expand.">
+        <circle cx="230" cy="80" r="42"/>
+        <text class="node-label" x="230" y="80">See</text>
       </g>
 
-      <!-- Phase 3: Try — x=400, y=60 wait — midpoint trough at 300 -->
-      <g class="phase-node" data-phase="2" tabindex="0" role="button" aria-label="Try — Active and experiential">
-        <circle cx="330" cy="110" r="28"/>
-        <text class="node-label" x="330" y="114">Try</text>
-        <text class="node-name" x="330" y="150">Experience</text>
+      <!-- Phase 3: Try — trough -->
+      <g class="phase-node" data-phase="2" tabindex="0" role="button" aria-label="Phase 3: Try — Active and experiential. Press Enter or Space to expand.">
+        <circle cx="400" cy="140" r="42"/>
+        <text class="node-label" x="400" y="140">Try</text>
       </g>
 
-      <!-- Phase 4: Share — x=500, y=110 crest at 500 -->
-      <g class="phase-node" data-phase="3" tabindex="0" role="button" aria-label="Share — Social learning">
-        <circle cx="530" cy="60" r="28"/>
-        <text class="node-label" x="530" y="64">Share</text>
-        <text class="node-name" x="530" y="100">Social</text>
+      <!-- Phase 4: Share — crest -->
+      <g class="phase-node" data-phase="3" tabindex="0" role="button" aria-label="Phase 4: Share — Social learning. Press Enter or Space to expand.">
+        <circle cx="570" cy="80" r="42"/>
+        <text class="node-label" x="570" y="80">Share</text>
       </g>
 
-      <!-- Phase 5: Reflect — x=700, y=110 -->
-      <g class="phase-node" data-phase="4" tabindex="0" role="button" aria-label="Reflect — Integration and transfer">
-        <circle cx="700" cy="110" r="28"/>
-        <text class="node-label" x="700" y="107" style="font-size:11px">Reflect</text>
-        <text class="node-name" x="700" y="150">Transfer</text>
+      <!-- Phase 5: Reflect — trough -->
+      <g class="phase-node" data-phase="4" tabindex="0" role="button" aria-label="Phase 5: Reflect — Integration and transfer. Press Enter or Space to expand.">
+        <circle cx="720" cy="140" r="42"/>
+        <text class="node-label" x="720" y="140">Reflect</text>
       </g>
+
     </svg>
   </div>
 
   <p class="hint">Select a phase to explore</p>
 
   <!-- DETAIL PANEL -->
-  <div class="detail" id="detail-panel" aria-live="polite">
+  <div class="detail" id="detail-panel" aria-live="polite" aria-atomic="true">
     <div class="detail-inner" id="detail-0">
       <p class="detail-tag">Relevance &amp; activation</p>
       <h2 class="detail-title">Why</h2>
@@ -470,15 +466,11 @@
 
 <script>
   // ── HEIGHT BROADCASTER ──
-  // Sends the document's true scrollHeight to the parent page so the
-  // iframe resizes exactly to fit its content — no fixed height needed.
   function notifyHeight() {
     const h = document.documentElement.scrollHeight;
     window.parent.postMessage({ iframeHeight: h }, '*');
   }
 
-  // Fire once fonts + layout are settled, then again after 400ms
-  // to catch any async font-load that shifts the layout.
   window.addEventListener('load', function () {
     notifyHeight();
     setTimeout(notifyHeight, 400);
@@ -490,7 +482,6 @@
   let active = null;
 
   function activate(idx) {
-    // Reset all
     nodes.forEach(n => n.classList.remove('active'));
     panels.forEach(p => {
       p.classList.remove('visible');
@@ -498,9 +489,7 @@
     });
 
     if (active === idx) {
-      // Clicking active node collapses it
       active = null;
-      // Notify after transition completes (300ms matches CSS)
       setTimeout(notifyHeight, 320);
       return;
     }
@@ -509,10 +498,9 @@
     nodes[idx].classList.add('active');
     const panel = document.getElementById('detail-' + idx);
     panel.style.display = 'block';
-    panel.getBoundingClientRect(); // force reflow for transition
+    panel.getBoundingClientRect();
     panel.classList.add('visible');
 
-    // Notify immediately (panel is block now) and again after transition
     notifyHeight();
     setTimeout(notifyHeight, 320);
   }
@@ -521,6 +509,10 @@
     node.addEventListener('click', () => activate(i));
     node.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(i); }
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); nodes[Math.min(i + 1, nodes.length - 1)].focus(); }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); nodes[Math.max(i - 1, 0)].focus(); }
+      if (e.key === 'Home') { e.preventDefault(); nodes[0].focus(); }
+      if (e.key === 'End')  { e.preventDefault(); nodes[nodes.length - 1].focus(); }
     });
   });
 
@@ -531,7 +523,6 @@
     const trigger = phase.querySelector('.mobile-trigger');
     trigger.addEventListener('click', () => {
       const isOpen = phase.classList.contains('open');
-      // Close all
       mobilePanels.forEach(p => {
         p.classList.remove('open');
         p.querySelector('.mobile-trigger').setAttribute('aria-expanded', 'false');
@@ -540,7 +531,6 @@
         phase.classList.add('open');
         trigger.setAttribute('aria-expanded', 'true');
       }
-      // Notify after mobile accordion transition (300ms)
       setTimeout(notifyHeight, 320);
     });
   });
