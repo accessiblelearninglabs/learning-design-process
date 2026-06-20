@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning Design Workflow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:    #303e44;
+    --accent: #475f6a;
+    --mid:    #7a9aa6;
+    --pale:   #e8f0f3;
+    --rule:   #d0dde1;
+    --white:  #ffffff;
+  }
+
+  html, body {
+    background: var(--white);
+    font-family: 'Asap', sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 2.5rem;
+  }
+
+  /* ── PHASE STRIP ── */
+  .phases {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    position: relative;
+  }
+
+  /* Connector line threading through the three phase headers */
+  .phases::before {
+    content: '';
+    position: absolute;
+    top: 28px; /* vertically centred on the phase number circle */
+    left: calc(33.33% / 2);
+    right: calc(33.33% / 2);
+    height: 1px;
+    background: var(--rule);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ── PHASE CARD ── */
+  .phase {
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    padding: 0;
+    background: none;
+    border: none;
+    text-align: left;
+    font-family: 'Asap', sans-serif;
+  }
+
+  .phase-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 1.25rem;
+    border-bottom: 2px solid var(--rule);
+    transition: border-color 0.2s;
+    padding-right: 1.5rem;
+  }
+
+  .phase:last-child .phase-header { padding-right: 0; }
+
+  .phase.active .phase-header,
+  .phase:hover .phase-header {
+    border-bottom-color: var(--accent);
+  }
+
+  .phase-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--mid);
+    background: var(--white);
+    margin-bottom: 0.85rem;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .phase.active .phase-number,
+  .phase:hover .phase-number {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--white);
+  }
+
+  .phase:focus { outline: none; }
+  .phase:focus .phase-number {
+    box-shadow: 0 0 0 3px var(--pale), 0 0 0 5px var(--accent);
+  }
+
+  .phase-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 0.3rem;
+  }
+
+  .phase-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+    transition: color 0.2s;
+  }
+
+  .phase.active .phase-title { color: var(--accent); font-weight: 600; }
+
+  .phase-duration {
+    font-size: 0.72rem;
+    color: var(--mid);
+    margin-top: 0.35rem;
+    font-style: italic;
+  }
+
+  /* ── DETAIL PANELS ── */
+  /* Panels sit below the three-column grid, full width */
+  .detail-wrap {
+    margin-top: 0;
+  }
+
+  .detail-panel {
+    display: none;
+    padding: 1.75rem 0 0.25rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .detail-panel.visible {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    animation: fadeUp 0.25s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .detail-col-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 0.7rem;
+  }
+
+  .milestone-tag {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    padding: 0.2rem 0.55rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .activity-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .activity-list li {
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.65;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--pale);
+    display: flex;
+    gap: 0.65rem;
+    align-items: baseline;
+  }
+
+  .activity-list li:last-child { border-bottom: none; }
+
+  .activity-list li::before {
+    content: '—';
+    color: var(--mid);
+    flex-shrink: 0;
+    font-size: 0.8rem;
+  }
+
+  .detail-note {
+    font-size: 0.82rem;
+    color: var(--mid);
+    line-height: 1.7;
+    font-style: italic;
+    margin-top: 1rem;
+  }
+
+  .milestone-desc {
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  /* ── HINT ── */
+  .hint {
+    font-size: 0.68rem;
+    color: var(--mid);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  /* ── MOBILE ACCORDION ── */
+  .mobile-wrap { display: none; }
+
+  .mob-phase {
+    border-top: 1px solid var(--rule);
+  }
+  .mob-phase:last-child { border-bottom: 1px solid var(--rule); }
+
+  .mob-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1.1rem 0;
+    cursor: pointer;
+    text-align: left;
+    gap: 1rem;
+    font-family: 'Asap', sans-serif;
+  }
+
+  .mob-trigger:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .mob-left {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .mob-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--mid);
+    flex-shrink: 0;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+
+  .mob-phase.open .mob-num {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--white);
+  }
+
+  .mob-title-wrap { }
+
+  .mob-label {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid);
+    display: block;
+  }
+
+  .mob-title {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--ink);
+    display: block;
+  }
+
+  .mob-chevron {
+    font-size: 0.7rem;
+    color: var(--mid);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .mob-phase.open .mob-chevron { transform: rotate(180deg); }
+
+  .mob-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .mob-phase.open .mob-content { max-height: 800px; }
+
+  .mob-inner {
+    padding: 0 0 1.5rem 2.85rem;
+  }
+
+  .mob-milestone-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    padding: 0.15rem 0.45rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .mob-col-label {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .mob-activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mob-activity-list li {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.6;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid var(--pale);
+    display: flex;
+    gap: 0.6rem;
+    align-items: baseline;
+  }
+
+  .mob-activity-list li:last-child { border-bottom: none; }
+
+  .mob-activity-list li::before {
+    content: '—';
+    color: var(--mid);
+    flex-shrink: 0;
+    font-size: 0.75rem;
+  }
+
+  .mob-note {
+    font-size: 0.8rem;
+    color: var(--mid);
+    font-style: italic;
+    line-height: 1.65;
+    margin-top: 0.85rem;
+  }
+
+  @media (max-width: 640px) {
+    .phases-wrap { display: none; }
+    .mobile-wrap { display: block; }
+    .wrap { padding: 1.75rem 1.1rem 2rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .detail-panel.visible { animation: none; }
+    .mob-content, .mob-chevron, .mob-num,
+    .phase-number, .phase-title, .phase-header { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ── DESKTOP ── -->
+  <div class="phases-wrap" role="region" aria-label="Learning design workflow — three phases">
+
+    <div class="phases" role="list">
+
+      <button class="phase" data-phase="0" role="listitem"
+        tabindex="0" aria-expanded="false" aria-controls="panel-0"
+        aria-label="Phase 1: Assessment, Analysis and Design. Press Enter to expand.">
+        <div class="phase-header">
+          <div class="phase-number" aria-hidden="true">1</div>
+          <span class="phase-label">Phase 1</span>
+          <span class="phase-title">Assessment, Analysis &amp; Design</span>
+          <span class="phase-duration">~2 weeks</span>
+        </div>
+      </button>
+
+      <button class="phase" data-phase="1" role="listitem"
+        tabindex="0" aria-expanded="false" aria-controls="panel-1"
+        aria-label="Phase 2: Development, Testing and Delivery. Press Enter to expand.">
+        <div class="phase-header">
+          <div class="phase-number" aria-hidden="true">2</div>
+          <span class="phase-label">Phase 2</span>
+          <span class="phase-title">Development, Testing &amp; Delivery</span>
+          <span class="phase-duration">~2 weeks</span>
+        </div>
+      </button>
+
+      <button class="phase" data-phase="2" role="listitem"
+        tabindex="0" aria-expanded="false" aria-controls="panel-2"
+        aria-label="Phase 3: Evaluation, Impact and Sustainment. Press Enter to expand.">
+        <div class="phase-header">
+          <div class="phase-number" aria-hidden="true">3</div>
+          <span class="phase-label">Phase 3</span>
+          <span class="phase-title">Evaluation, Impact &amp; Sustainment</span>
+          <span class="phase-duration">~2 weeks</span>
+        </div>
+      </button>
+
+    </div><!-- /phases -->
+
+    <div class="detail-wrap" aria-live="polite" aria-atomic="true">
+
+      <div class="detail-panel" id="panel-0" role="region" aria-label="Phase 1 details">
+        <div>
+          <p class="detail-col-label">Activities</p>
+          <ul class="activity-list">
+            <li>Learning needs assessment</li>
+            <li>Stakeholder interviews</li>
+            <li>Research synthesis</li>
+            <li>Project scoping and planning</li>
+            <li>Storyboard development</li>
+            <li>Decision gate — reassess before proceeding</li>
+          </ul>
+          <p class="detail-note">Activities are grouped to enable reverse-engineering from the storyboard output. The decision gate provides an opportunity to course-correct before investment in development.</p>
+        </div>
+        <div>
+          <p class="detail-col-label">Milestone</p>
+          <span class="milestone-tag">Design milestone</span>
+          <p class="milestone-desc">A complete blueprint for the learning experience — before a single piece of content is built. The storyboard is the definitive output: it specifies structure, sequence, learning outcomes, assessment approach, and accessibility requirements.</p>
+          <p class="detail-note">Outputs: assessment report · research report · project plan · storyboard</p>
+        </div>
+      </div>
+
+      <div class="detail-panel" id="panel-1" role="region" aria-label="Phase 2 details">
+        <div>
+          <p class="detail-col-label">Activities</p>
+          <ul class="activity-list">
+            <li>Content development</li>
+            <li>Technical skill development and aid</li>
+            <li>Beta testing with real learners</li>
+            <li>Structured beta feedback session</li>
+            <li>Quality assurance against accessibility and instructional standards</li>
+            <li>Delivery preparation</li>
+          </ul>
+          <p class="detail-note">Beta feedback is design data, not a formality. QA is documented and accountable. Learner feedback from testing is integrated before delivery.</p>
+        </div>
+        <div>
+          <p class="detail-col-label">Milestone</p>
+          <span class="milestone-tag">Delivery milestone</span>
+          <p class="milestone-desc">Content is ready for deployment. Activities in this phase are grouped to enable reverse-engineering from the integration of learning evaluation data — meaning the evaluation framework is in place before learners begin.</p>
+          <p class="detail-note">Outputs: beta testing report · quality assurance report · delivery preparation plan</p>
+        </div>
+      </div>
+
+      <div class="detail-panel" id="panel-2" role="region" aria-label="Phase 3 details">
+        <div>
+          <p class="detail-col-label">Activities</p>
+          <ul class="activity-list">
+            <li>Post-delivery evaluation</li>
+            <li>Learning path evaluation</li>
+            <li>Impact reporting</li>
+            <li>Sustainment planning</li>
+            <li>Update triggers and maintenance cycles</li>
+            <li>Knowledge management</li>
+          </ul>
+          <p class="detail-note">Evaluation is designed from the start — not added at the end. Impact is measured at every level: learner reaction, knowledge acquisition, behavioural transfer, and organisational outcomes.</p>
+        </div>
+        <div>
+          <p class="detail-col-label">Milestone</p>
+          <span class="milestone-tag">Sustainment milestone</span>
+          <p class="milestone-desc">The program continues to work over time. Activities in this phase are grouped from the perspective of the organisation's long-term needs — not just the immediate learning event. Sustainment is planned from the outset, not retrofitted.</p>
+          <p class="detail-note">Outputs: evaluation and impact report · sustainment plan</p>
+        </div>
+      </div>
+
+    </div><!-- /detail-wrap -->
+
+    <p class="hint" aria-hidden="true">Select a phase to explore</p>
+
+  </div><!-- /phases-wrap -->
+
+
+  <!-- ── MOBILE ACCORDION ── -->
+  <div class="mobile-wrap" role="list" aria-label="Learning design workflow — three phases">
+
+    <div class="mob-phase" role="listitem">
+      <button class="mob-trigger" aria-expanded="false" aria-controls="mob-panel-0">
+        <div class="mob-left">
+          <div class="mob-num" aria-hidden="true">1</div>
+          <div class="mob-title-wrap">
+            <span class="mob-label">Phase 1</span>
+            <span class="mob-title">Assessment, Analysis &amp; Design</span>
+          </div>
+        </div>
+        <span class="mob-chevron" aria-hidden="true">▼</span>
+      </button>
+      <div class="mob-content" id="mob-panel-0">
+        <div class="mob-inner">
+          <span class="mob-milestone-tag">Design milestone</span>
+          <p class="mob-col-label">Activities</p>
+          <ul class="mob-activity-list">
+            <li>Learning needs assessment</li>
+            <li>Stakeholder interviews</li>
+            <li>Research synthesis</li>
+            <li>Project scoping and planning</li>
+            <li>Storyboard development</li>
+            <li>Decision gate — reassess before proceeding</li>
+          </ul>
+          <p class="mob-note">Outputs: assessment report · research report · project plan · storyboard</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mob-phase" role="listitem">
+      <button class="mob-trigger" aria-expanded="false" aria-controls="mob-panel-1">
+        <div class="mob-left">
+          <div class="mob-num" aria-hidden="true">2</div>
+          <div class="mob-title-wrap">
+            <span class="mob-label">Phase 2</span>
+            <span class="mob-title">Development, Testing &amp; Delivery</span>
+          </div>
+        </div>
+        <span class="mob-chevron" aria-hidden="true">▼</span>
+      </button>
+      <div class="mob-content" id="mob-panel-1">
+        <div class="mob-inner">
+          <span class="mob-milestone-tag">Delivery milestone</span>
+          <p class="mob-col-label">Activities</p>
+          <ul class="mob-activity-list">
+            <li>Content development</li>
+            <li>Beta testing with real learners</li>
+            <li>Structured beta feedback session</li>
+            <li>Quality assurance</li>
+            <li>Delivery preparation</li>
+          </ul>
+          <p class="mob-note">Outputs: beta testing report · quality assurance report · delivery preparation plan</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mob-phase" role="listitem">
+      <button class="mob-trigger" aria-expanded="false" aria-controls="mob-panel-2">
+        <div class="mob-left">
+          <div class="mob-num" aria-hidden="true">3</div>
+          <div class="mob-title-wrap">
+            <span class="mob-label">Phase 3</span>
+            <span class="mob-title">Evaluation, Impact &amp; Sustainment</span>
+          </div>
+        </div>
+        <span class="mob-chevron" aria-hidden="true">▼</span>
+      </button>
+      <div class="mob-content" id="mob-panel-2">
+        <div class="mob-inner">
+          <span class="mob-milestone-tag">Sustainment milestone</span>
+          <p class="mob-col-label">Activities</p>
+          <ul class="mob-activity-list">
+            <li>Post-delivery evaluation</li>
+            <li>Learning path evaluation</li>
+            <li>Impact reporting</li>
+            <li>Sustainment planning</li>
+            <li>Update triggers and maintenance cycles</li>
+          </ul>
+          <p class="mob-note">Outputs: evaluation and impact report · sustainment plan</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /mobile-wrap -->
+
+</div><!-- /wrap -->
+
+<script>
+  // ── HEIGHT BROADCASTER ──
+  function notifyHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ iframeHeight: h }, '*');
+  }
+  window.addEventListener('load', function () {
+    notifyHeight();
+    setTimeout(notifyHeight, 400);
+  });
+
+  // ── DESKTOP INTERACTION ──
+  var phases  = document.querySelectorAll('.phase');
+  var panels  = document.querySelectorAll('.detail-panel');
+  var active  = null;
+
+  function activatePhase(idx) {
+    phases.forEach(function(p) {
+      p.classList.remove('active');
+      p.setAttribute('aria-expanded', 'false');
+    });
+    panels.forEach(function(p) { p.classList.remove('visible'); });
+
+    if (active === idx) {
+      active = null;
+      setTimeout(notifyHeight, 320);
+      return;
+    }
+
+    active = idx;
+    phases[idx].classList.add('active');
+    phases[idx].setAttribute('aria-expanded', 'true');
+    panels[idx].classList.add('visible');
+    notifyHeight();
+    setTimeout(notifyHeight, 320);
+  }
+
+  phases.forEach(function(phase, i) {
+    phase.addEventListener('click', function() { activatePhase(i); });
+    phase.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activatePhase(i); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); phases[Math.min(i + 1, phases.length - 1)].focus(); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); phases[Math.max(i - 1, 0)].focus(); }
+      if (e.key === 'Home') { e.preventDefault(); phases[0].focus(); }
+      if (e.key === 'End')  { e.preventDefault(); phases[phases.length - 1].focus(); }
+    });
+  });
+
+  // ── MOBILE ACCORDION ──
+  var mobPhases = document.querySelectorAll('.mob-phase');
+
+  mobPhases.forEach(function(phase) {
+    var trigger = phase.querySelector('.mob-trigger');
+    trigger.addEventListener('click', function() {
+      var isOpen = phase.classList.contains('open');
+      mobPhases.forEach(function(p) {
+        p.classList.remove('open');
+        p.querySelector('.mob-trigger').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        phase.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+      setTimeout(notifyHeight, 320);
+    });
+  });
+</script>
+</body>
+</html>
