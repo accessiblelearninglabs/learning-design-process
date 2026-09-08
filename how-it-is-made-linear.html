@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Is It Made — Eight Moves — Text Version</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:    #303e44;
+    --accent: #475f6a;
+    --mid:    #7a9aa6;
+    --pale:   #e8f0f3;
+    --rule:   #d0dde1;
+    --white:  #ffffff;
+  }
+
+  html, body {
+    background: var(--white);
+    font-family: 'Asap', sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 2.5rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    margin-bottom: 2rem;
+  }
+
+  .back-link:hover { color: var(--accent); }
+  .back-link::before { content: '← '; }
+
+  .page-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 2rem;
+    display: block;
+  }
+
+  .move-block {
+    padding: 2rem 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .move-block:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .move-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  .move-name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+
+  .move-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .move-body {
+    font-size: 0.92rem;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.75;
+    max-width: 640px;
+    margin-bottom: 0.75rem;
+  }
+
+  .move-fixes {
+    font-size: 0.78rem;
+    color: var(--mid);
+    font-style: italic;
+    line-height: 1.65;
+    max-width: 600px;
+  }
+
+  .move-fixes .label {
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+  }
+
+  @media (max-width: 600px) {
+    .wrap { padding: 1.75rem 1.25rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <a class="back-link" href="https://accessiblelearninglabs.github.io/learning-design-process/how-it-is-made.html">
+    Interactive version
+  </a>
+
+  <main aria-label="How is it made — eight moves — text version">
+
+    <span class="page-label" aria-hidden="true">Text version — Eight moves, one resource</span>
+
+    <section class="move-block" aria-labelledby="move1">
+      <div class="move-header">
+        <h2 class="move-name" id="move1">Move 1 — Name the person and the moment</h2>
+        <span class="move-tag">Before the rhythm</span>
+      </div>
+      <p class="move-body">Who this is for, what they already know, and the situation in which they will need it. Written down in one line before anything else.</p>
+      <p class="move-fixes"><span class="label">What it fixes:</span> content built for an average learner who does not exist.</p>
+    </section>
+
+    <section class="move-block" aria-labelledby="move2">
+      <div class="move-header">
+        <h2 class="move-name" id="move2">Move 2 — Write the outcome as something observable, then choose the evidence</h2>
+        <span class="move-tag">Before the rhythm</span>
+      </div>
+      <p class="move-body">What the person will be able to do; what would show it. The activity is built to produce that evidence, not the other way round.</p>
+      <p class="move-fixes"><span class="label">What it fixes:</span> outcomes that cannot be assessed — "understand," "be aware of" — and activities that drift from what is finally marked.</p>
+    </section>
+
+    <section class="move-block" aria-labelledby="move3">
+      <div class="move-header">
+        <h2 class="move-name" id="move3">Move 3 — Choose the smallest form that works</h2>
+        <span class="move-tag">Before the rhythm</span>
+      </div>
+      <p class="move-body">Modality follows the task and the setting — what device, what time, what noise — not preference or precedent. What is left out is decided here and recorded.</p>
+      <p class="move-fixes"><span class="label">What it fixes:</span> courses where a checklist would do; video where a page would do.</p>
+    </section>
+
+    <section class="move-block" aria-labelledby="move4">
+      <div class="move-header">
+        <h2 class="move-name" id="move4">Move 4 — Anchor it in the person's own case first</h2>
+        <span class="move-tag">Why &amp; See</span>
+      </div>
+      <p class="move-body">Open with their situation and the decision in front of them. Then the model — a worked example before the principle, because a principle without a case has nowhere to attach.</p>
+      <p class="move-fixes"><span class="label">What it fixes:</span> content that is accurate and never used.</p>
+    </section>
+
+    <section class="move-block" aria-labelledby="move5">
+      <div class="move-header">
+        <h2 class="move-name" id="move5">Move 5 — Build the practice with its feedback</h2>
+        <span class="move-tag">Try</span>
+      </div>
+      <p class="move-body">A task the person can attempt, get wrong, and see the consequence of, with feedback that says what to change rather than whether they were right. Retrieval and spacing are in the schedule, not left to habit.</p>
+      <p class="move-fixes"><span class="label">What it fixes:</span> passive exposure that feels like learning and does not consolidate.</p>
+    </section>
+
+    <section class="move-block" aria-labelledby="move6">
+      <div class="move-header">
+        <h2 class="move-name" id="move6">Move 6 — Design the social layer</h2>
+        <span class="move-tag">Share</span>
+      </div>
+      <p class="move-body">Where two or more people will meet the resource together, the exchange is structured — what to compare, what to explain to each other — so that expertise circulates rather than sitting with the confident.</p>
+      <p class="move-fixes"><span class="label">What it fixes:</span> discussion as filler; peer learning left to chance.</p>
+    </section>
+
+    <section class="move-block" aria-labelledby="move7">
+      <div class="move-header">
+        <h2 class="move-name" id="move7">Move 7 — Close with transfer</h2>
+        <span class="move-tag">Reflect</span>
+      </div>
+      <p class="move-body">A prompt that asks the person to name where, in their own work, this applies next — because that naming is what moves knowledge from the resource to the room.</p>
+      <p class="move-fixes"><span class="label">What it fixes:</span> learning that ends when the module does.</p>
+    </section>
+
+    <section class="move-block" aria-labelledby="move8">
+      <div class="move-header">
+        <h2 class="move-name" id="move8">Move 8 — Draft accessible, write in plain language, test with the population</h2>
+        <span class="move-tag">Throughout</span>
+      </div>
+      <p class="move-body">Access from the first draft, at the reading level of the people named in move 1, and a pass with real learners before release. What they cannot use is redesigned, not explained.</p>
+      <p class="move-fixes"><span class="label">What it fixes:</span> accommodation as a downstream fix; resources that fail and look like a learner who did not try.</p>
+    </section>
+
+  </main>
+
+</div>
+
+<script>
+  function notifyHeight() {
+    var h = document.documentElement.scrollHeight;
+    window.parent.postMessage({ iframeHeight: h }, '*');
+  }
+  window.addEventListener('load', function () {
+    notifyHeight();
+    setTimeout(notifyHeight, 400);
+  });
+</script>
+
+</body>
+</html>
