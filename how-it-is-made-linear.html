@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Approach · How is it made — accessible version · Andrea Robin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#fff;--ink:#43525a;--ink-strong:#303e44;--stone:#8a959b;--accent:#475f6a;--hair:#e2e6e8;--panel:#f7f8f9;}
+  body{margin:0;font-family:'Asap',system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.65;-webkit-font-smoothing:antialiased;font-size:17px}
+  main{max-width:760px;margin:0 auto;padding:24px 20px 48px}
+  .skip{position:absolute;left:-999px} .skip:focus{left:16px;top:8px;background:var(--paper);padding:.4rem .6rem;border:1px solid var(--accent)}
+  .eyebrow,.marker{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);margin:0 0 .4rem}
+  h1{font-weight:600;color:var(--ink-strong);font-size:1.8rem;line-height:1.2;margin:0 0 .5rem}
+  h2{font-weight:600;color:var(--ink-strong);font-size:1.3rem;margin:0 0 .2rem}
+  h3{font-weight:600;color:var(--ink-strong);font-size:.95rem;margin:1rem 0 .2rem}
+  p{margin:0 0 .8rem} .q{font-style:italic;font-weight:300;font-size:1.05rem}
+  nav ul{padding-left:1.2rem;margin:0 0 1.5rem} nav li{margin:.2rem 0}
+  a{color:var(--accent)} a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .step{border-top:1px solid var(--hair);padding:1.4rem 0 .6rem}
+  .src{font-size:.88rem;color:var(--stone)}
+  .version{background:var(--panel);padding:.9rem 1rem;font-size:.92rem;margin:0 0 1.4rem}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<main id="main">
+  <p class="eyebrow">Approach · How is it made · Accessible version</p>
+  <h1>Eight moves, one resource</h1>
+  <p class="version">All content is presented in reading order, with no diagram or scripting. Each move asks one question, states what happens, and names what it prevents. Moves four to seven are the five-phase rhythm — why, see, try, share, reflect — applied to a single resource; moves one to three and eight are what make it hold for the people it is for. The <a href="how-it-is-made.html">interactive version</a> presents the same eight moves as a selectable sequence.</p>
+  <nav aria-label="Moves"><ul><li><a href="#move-person">Move 1 · Name the person and the moment</a></li><li><a href="#move-outcome">Move 2 · Write the outcome, then choose the evidence</a></li><li><a href="#move-form">Move 3 · Choose the smallest form that works</a></li><li><a href="#move-anchor">Move 4 · Anchor it in the person's own case</a></li><li><a href="#move-practice">Move 5 · Build the practice with its feedback</a></li><li><a href="#move-social">Move 6 · Design the social layer</a></li><li><a href="#move-transfer">Move 7 · Close with transfer</a></li><li><a href="#move-access">Move 8 · Draft accessible, write plainly, test with the population</a></li></ul></nav>
+
+  <section class="step" id="move-person" aria-labelledby="h-person">
+    <p class="marker">Move 1 of 8 · Before the rhythm</p>
+    <h2 id="h-person">Name the person and the moment</h2>
+    <p class="q">Who is this for, and when will they need it?</p>
+    <h3>What happens</h3>
+    <p>Who this is for, what they already know, and the situation in which they will need it — a nurse on shift, a caseworker with a file open, a student in the week before a deadline. Written down in one line before anything else.</p>
+    <h3>What it fixes</h3>
+    <p>Content built for an average learner who does not exist.</p>
+  </section>
+
+  <section class="step" id="move-outcome" aria-labelledby="h-outcome">
+    <p class="marker">Move 2 of 8 · Before the rhythm</p>
+    <h2 id="h-outcome">Write the outcome, then choose the evidence</h2>
+    <p class="q">What will they be able to do, and what would show it?</p>
+    <h3>What happens</h3>
+    <p>The outcome is written as something observable, and the evidence that would show it is chosen before any content exists. The activity is then built to produce that evidence, not the other way round.</p>
+    <h3>What it fixes</h3>
+    <p>Outcomes that cannot be assessed — "understand," "be aware of" — and activities that drift from what is finally marked.</p>
+  </section>
+
+  <section class="step" id="move-form" aria-labelledby="h-form">
+    <p class="marker">Move 3 of 8 · Before the rhythm</p>
+    <h2 id="h-form">Choose the smallest form that works</h2>
+    <p class="q">What is the least that would do the job?</p>
+    <h3>What happens</h3>
+    <p>Modality follows the task and the setting — what device, what time, what noise — not preference or precedent. What is left out is decided here and recorded.</p>
+    <h3>What it fixes</h3>
+    <p>Courses where a checklist would do; video where a page would do.</p>
+  </section>
+
+  <section class="step" id="move-anchor" aria-labelledby="h-anchor">
+    <p class="marker">Move 4 of 8 · In the rhythm: Why and See</p>
+    <h2 id="h-anchor">Anchor it in the person's own case</h2>
+    <p class="q">Why does this matter to them, and what does it look like done well?</p>
+    <h3>What happens</h3>
+    <p>The resource opens with the person's situation and the decision in front of them. Then the model — a worked example before the principle, because a principle without a case has nowhere to attach.</p>
+    <h3>What it fixes</h3>
+    <p>Content that is accurate and never used.</p>
+  </section>
+
+  <section class="step" id="move-practice" aria-labelledby="h-practice">
+    <p class="marker">Move 5 of 8 · In the rhythm: Try</p>
+    <h2 id="h-practice">Build the practice with its feedback</h2>
+    <p class="q">Where do they get to try it, and get it wrong?</p>
+    <h3>What happens</h3>
+    <p>A task the person can attempt, get wrong, and see the consequence of, with feedback that says what to change rather than whether they were right. Retrieval and spacing are in the schedule, not left to habit.</p>
+    <h3>What it fixes</h3>
+    <p>Passive exposure that feels like learning and does not consolidate.</p>
+  </section>
+
+  <section class="step" id="move-social" aria-labelledby="h-social">
+    <p class="marker">Move 6 of 8 · In the rhythm: Share</p>
+    <h2 id="h-social">Design the social layer</h2>
+    <p class="q">What do they work out together, and how?</p>
+    <h3>What happens</h3>
+    <p>Where two or more people will meet the resource together, the exchange is structured — what to compare, what to explain to each other — so that expertise circulates rather than sitting with the confident.</p>
+    <h3>What it fixes</h3>
+    <p>Discussion as filler; peer learning left to chance.</p>
+  </section>
+
+  <section class="step" id="move-transfer" aria-labelledby="h-transfer">
+    <p class="marker">Move 7 of 8 · In the rhythm: Reflect</p>
+    <h2 id="h-transfer">Close with transfer</h2>
+    <p class="q">Where does this apply next, in their own work?</p>
+    <h3>What happens</h3>
+    <p>A prompt that asks the person to name where, in their own work, this applies next — because that naming is what moves knowledge from the resource to the room.</p>
+    <h3>What it fixes</h3>
+    <p>Learning that ends when the module does.</p>
+  </section>
+
+  <section class="step" id="move-access" aria-labelledby="h-access">
+    <p class="marker">Move 8 of 8 · Throughout</p>
+    <h2 id="h-access">Draft accessible, write plainly, test with the population</h2>
+    <p class="q">Can the people it is for actually use it?</p>
+    <h3>What happens</h3>
+    <p>Access is a property of the first draft, at the reading level of the people named in move one, with a pass with real learners before release. What they cannot use is redesigned, not explained.</p>
+    <h3>What it fixes</h3>
+    <p>Accommodation as a downstream fix; resources that fail and look like a learner who did not try.</p>
+  </section>
+
+  <p class="src" style="margin-top:1.6rem">The grounding for each move is in the reference list on the <a href="https://www.andrearobin.com/approach">Approach page</a>.</p>
+</main>
+</body>
+</html>
